@@ -28,6 +28,36 @@ public class Vector {
         return z;
     }
 
+    /** Сумма двух векторов. */
+    public Vector plus(Vector other) {
+        return new Vector(x + other.x, y + other.y, z + other.z);
+    }
+
+    /** Противоположный вектор. */
+    public Vector unaryMinus() {
+        return new Vector(-x, -y, -z);
+    }
+
+    /** Разность двух векторов. */
+    public Vector minus(Vector other) {
+        return this.plus(other.unaryMinus());
+    }
+
+    /** Скалярное произведение векторов. */
+    public double dotProduct(Vector other) {
+        return x * other.x + y * other.y + z * other.z;
+    }
+
+    /** Векторное произведение векторов. */
+    public Vector crossProduct(Vector other) {
+        return new Vector(y * other.z - z * other.y, z * other.x - x * other.z, x * other.y - y * other.x);
+    }
+
+    /** Умножение вектора на число. */
+    public Vector times(double number) {
+        return new Vector(number * x, number * y, number * z);
+    }
+
     @Override
     public boolean equals(Object object) {
         if (this == object)
