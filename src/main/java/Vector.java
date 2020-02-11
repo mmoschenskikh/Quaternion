@@ -1,59 +1,81 @@
 public class Vector {
     private final double x, y, z;
 
-    /** Построение вектора по компонентам. */
+    /**
+     * Построение вектора по компонентам.
+     */
     Vector(double x, double y, double z) {
         this.x = x;
         this.y = y;
         this.z = z;
     }
 
-    /** Модуль вектора. */
+    /**
+     * Модуль вектора.
+     */
     public double length() {
         return Math.sqrt(x * x + y * y + z * z);
     }
 
-    /** Возвращает компоненту x (проекцию на ось Ox) вектора. */
+    /**
+     * Возвращает компоненту x (проекцию на ось Ox) вектора.
+     */
     public double getX() {
         return x;
     }
 
-    /** Возвращает компоненту y (проекцию на ось Oy) вектора. */
+    /**
+     * Возвращает компоненту y (проекцию на ось Oy) вектора.
+     */
     public double getY() {
         return y;
     }
 
-    /** Возвращает компоненту z (проекцию на ось Oz) вектора. */
+    /**
+     * Возвращает компоненту z (проекцию на ось Oz) вектора.
+     */
     public double getZ() {
         return z;
     }
 
-    /** Сумма двух векторов. */
+    /**
+     * Сумма двух векторов.
+     */
     public Vector plus(Vector other) {
         return new Vector(x + other.x, y + other.y, z + other.z);
     }
 
-    /** Противоположный вектор. */
+    /**
+     * Противоположный вектор.
+     */
     public Vector unaryMinus() {
         return new Vector(-x, -y, -z);
     }
 
-    /** Разность двух векторов. */
+    /**
+     * Разность двух векторов.
+     */
     public Vector minus(Vector other) {
         return this.plus(other.unaryMinus());
     }
 
-    /** Скалярное произведение векторов. */
+    /**
+     * Скалярное произведение векторов.
+     */
     public double dotProduct(Vector other) {
         return x * other.x + y * other.y + z * other.z;
     }
 
-    /** Векторное произведение векторов. */
+    /**
+     * Векторное произведение векторов.
+     */
     public Vector crossProduct(Vector other) {
         return new Vector(y * other.z - z * other.y, z * other.x - x * other.z, x * other.y - y * other.x);
     }
 
-    /** Умножение вектора на число. */
+    /**
+     * Умножение вектора на число.
+     */
     public Vector times(double number) {
         return new Vector(number * x, number * y, number * z);
     }

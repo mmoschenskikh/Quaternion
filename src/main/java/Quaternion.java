@@ -28,7 +28,7 @@ public class Quaternion {
      * Получение угла поворота.
      */
     public double getAngle() {
-        final double angle = 2 * acos(a);
+        final double angle = 2 * acos(a) % (2 * PI);
         if (Double.isNaN(angle)) {
             throw new IllegalStateException("Данный кватернион не задаёт угол и ось вращения.");
         }
@@ -40,9 +40,6 @@ public class Quaternion {
      */
     public Vector getAxis() {
         final double halfSin = sin(getAngle() / 2);
-        if (Double.isNaN(halfSin)) {
-            throw new IllegalStateException("Данный кватернион не задаёт угол и ось вращения.");
-        }
         if (halfSin == 0.0) {
             return new Vector(0, 0, 0);
         }
@@ -92,6 +89,9 @@ public class Quaternion {
      * Обращение кватерниона
      */
     public Quaternion inverse() {
+        if (norm() == 0) {
+            throw new IllegalStateException("Невозможно инвертировать нулевой кватернион.");
+        }
         return conjugate().times(1 / (norm() * norm()));
     }
 
@@ -120,7 +120,10 @@ public class Quaternion {
      * Нормирование (получение единичного кватеринона).
      */
     public Quaternion getUnit() {
-        return times(norm());
+        if (norm() == 0) {
+            throw new IllegalStateException("Невозможно нормировать нулевой кватернион.");
+        }
+        return times(1 / norm());
     }
 
     @Override
