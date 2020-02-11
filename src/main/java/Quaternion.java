@@ -20,14 +20,54 @@ public class Quaternion {
         d = axis.getZ() * halfSin;
     }
 
-    /** Модуль кватерниона. */
-    public double norm() {
-        return sqrt(a * a + b * b + c * c + d * d);
+    /** Получение угла поворота. */
+    public double getAngle() {
+        return 2 * acos(a);
+    }
+
+    /** Получение оси вращения. */
+    public Vector getAxis() {
+        final double halfSin = sin(getAngle() / 2);
+        return new Vector(b / halfSin, c / halfSin, d / halfSin);
+    }
+
+    /** Умножение кватерниона на число. */
+    public Quaternion times(double number) {
+        return new Quaternion(number * a, number * b, number * c, number * d);
     }
 
     /** Сопряжение кватерниона. */
     public Quaternion conjugate() {
         return new Quaternion(a, -b, -c, -d);
+    }
+
+    /** Сумма двух кватернионов */
+    public Quaternion plus(Quaternion other) {
+        return new Quaternion(a + other.a, b + other.b, c + other.c, d + other.d);
+    }
+
+    /** Разность двух кватернионов */
+    public Quaternion minus(Quaternion other) {
+        return new Quaternion(a - other.a, b - other.b, c - other.c, d - other.d);
+    }
+
+    /** Произведение двух кватернионов. */
+    public Quaternion times(Quaternion other) {
+        return new Quaternion(
+                a * other.a - b * other.b - c * other.c - d * other.d,
+                a * other.b + b * other.a + c * other.d - d * other.c,
+                a * other.c - b * other.d + c * other.a + d * other.b,
+                a * other.d + b * other.c - c * other.b + d * other.a);
+    }
+
+    /** Обращение кватерниона */
+    public Quaternion inverse() {
+        return conjugate().times(1 / (norm() * norm()));
+    }
+
+    /** Модуль кватерниона. */
+    public double norm() {
+        return sqrt(a * a + b * b + c * c + d * d);
     }
 
     /** Возвращает скалярную часть кватерниона. */
@@ -40,6 +80,11 @@ public class Quaternion {
         return new Vector(b, c, d);
     }
 
+    /** Нормирование (получение единичного кватеринона). */
+    public Quaternion getUnit() {
+        return times(norm());
+    }
+
     @Override
     public boolean equals(Object object) {
         if (this == object)
@@ -49,6 +94,13 @@ public class Quaternion {
             return a == other.a && b == this.b && c == this.c && d == this.d;
         }
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) a;
+        result = 31 * result + getVectorPart().hashCode();
+        return result;
     }
 
     @Override

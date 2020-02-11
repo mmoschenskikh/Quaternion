@@ -70,6 +70,14 @@ public class Vector {
     }
 
     @Override
+    public int hashCode() {
+        int result = (int) x;
+        result = 31 * result + (int) y;
+        result = 31 * result + (int) z;
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "a = " + x + "i + " + y + "j + " + z + "k";
     }
