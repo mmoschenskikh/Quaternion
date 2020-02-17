@@ -1,7 +1,7 @@
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static java.lang.Math.*;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class QuaternionTests {
     Quaternion zero = new Quaternion(0, 0, 0, 0);
