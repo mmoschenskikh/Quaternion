@@ -1,12 +1,16 @@
 import static java.lang.Math.*;
 
 public class Quaternion {
-    private final double a, b, c, d; // q = a + bi + cj + dk
+    // q = a + bi + cj + dk
+    private final double a;
+    private final double b;
+    private final double c;
+    private final double d;
 
     /**
      * Построение кватерниона по коэффициентам.
      */
-    Quaternion(double a, double b, double c, double d) {
+    public Quaternion(double a, double b, double c, double d) {
         this.a = a;
         this.b = b;
         this.c = c;
@@ -16,8 +20,8 @@ public class Quaternion {
     /**
      * Построение кватерниона заданием угла поворота и оси вращения.
      */
-    Quaternion(double angle, Vector axis) {
-        double halfSin = sin(angle / 2);
+    public Quaternion(double angle, Vector axis) {
+        final double halfSin = sin(angle / 2);
         a = cos(angle / 2);
         b = axis.getX() * halfSin;
         c = axis.getY() * halfSin;
@@ -89,10 +93,11 @@ public class Quaternion {
      * Обращение кватерниона
      */
     public Quaternion inverse() {
-        if (norm() == 0) {
+        final double norm = norm();
+        if (norm == 0) {
             throw new IllegalStateException("Невозможно инвертировать нулевой кватернион.");
         }
-        return conjugate().times(1 / (norm() * norm()));
+        return conjugate().times(1 / (norm * norm));
     }
 
     /**
@@ -120,10 +125,11 @@ public class Quaternion {
      * Нормирование (получение единичного кватеринона).
      */
     public Quaternion getUnit() {
-        if (norm() == 0) {
+        final double norm = norm();
+        if (norm == 0) {
             throw new IllegalStateException("Невозможно нормировать нулевой кватернион.");
         }
-        return times(1 / norm());
+        return times(1 / norm);
     }
 
     @Override
@@ -139,7 +145,7 @@ public class Quaternion {
 
     @Override
     public int hashCode() {
-        int result = (int) a;
+        int result = Double.hashCode(a);
         result = 31 * result + getVectorPart().hashCode();
         return result;
     }

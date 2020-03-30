@@ -1,10 +1,12 @@
 public class Vector {
-    private final double x, y, z;
+    private final double x;
+    private final double y;
+    private final double z;
 
     /**
      * Построение вектора по компонентам.
      */
-    Vector(double x, double y, double z) {
+    public Vector(double x, double y, double z) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -93,9 +95,9 @@ public class Vector {
 
     @Override
     public int hashCode() {
-        int result = (int) x;
-        result = 31 * result + (int) y;
-        result = 31 * result + (int) z;
+        int result = Double.hashCode(x);
+        result = 31 * result + Double.hashCode(y);
+        result = 31 * result + Double.hashCode(z);
         return result;
     }
 
